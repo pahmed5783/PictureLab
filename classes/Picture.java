@@ -117,6 +117,21 @@ public class Picture extends SimplePicture
       }
     } 
   }
+
+  public void mirrorVerticalRightToLeft() {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    int width = pixels[0].length;
+    for (int row = 0; row < pixels.length; row++) {
+      for (int col = width - 1; col > width / 2; col--) {
+        leftPixel = pixels[row][col];
+        rightPixel = pixels[row][width - 1 - col];
+        rightPixel.setColor(leftPixel.getColor());
+      }
+    }
+  }
+
   
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
@@ -126,20 +141,23 @@ public class Picture extends SimplePicture
     Pixel rightPixel = null;
     int count = 0;
     Pixel[][] pixels = this.getPixels2D();
-    
+
     // loop through the rows
     for (int row = 27; row < 97; row++)
     {
       // loop from 13 to just before the mirror point
       for (int col = 13; col < mirrorPoint; col++)
       {
-        
-        leftPixel = pixels[row][col];      
-        rightPixel = pixels[row]                       
-                         [mirrorPoint - col + mirrorPoint];
+
+        leftPixel = pixels[row][col];
+        rightPixel = pixels[row]
+                [mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
+
+        count++;
       }
     }
+    System.out.println(count);
   }
   
   /** copy from the passed fromPic to the
@@ -216,7 +234,95 @@ public class Picture extends SimplePicture
       }
     }
   }
-  
+
+  public void mirrorHorizontal() {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel topPixel = null;
+    Pixel bottomPixel = null;
+    int width = pixels[0].length;
+    for (int row = 0; row < pixels.length; row++) {
+      for (int col = 0; col < width; col++) {
+        topPixel = pixels[row][col];
+        bottomPixel = pixels[pixels.length - 1 - row][col];
+        bottomPixel.setColor(topPixel.getColor());
+      }
+    }
+  }
+
+  public void mirrorHorizontalBotToTop() {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel topPixel = null;
+    Pixel bottomPixel = null;
+    int width = pixels[0].length;
+    for (int row = pixels.length - 1; row > 0; row--) {
+      for (int col = 0; col < width; col++) {
+        topPixel = pixels[pixels.length - 1 - row][col];
+        bottomPixel = pixels[row][col];
+        topPixel.setColor(bottomPixel.getColor());
+      }
+    }
+  }
+
+  public void mirrorDiagonal() {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel rowPixel = null;
+    Pixel colPixel = null;
+    int height = pixels.length;
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < height; col++) {
+        colPixel = pixels[col][row];
+        rowPixel = pixels[row][col];
+        rowPixel.setColor(colPixel.getColor());
+      }
+    }
+  }
+
+  public void mirrorArms() {
+    int mirrorPoint = 170;
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    Pixel leftBottomPixel = null;
+    Pixel[][] pixels = this.getPixels2D();
+
+    // loop through the rows
+    for (int row = 159; row < 192; row++) {
+      // loop from 13 to just before the mirror point
+      for (int col = 102; col < mirrorPoint; col++) {
+        leftPixel = pixels[row][col];
+        rightPixel = pixels[row + 80][mirrorPoint - col + mirrorPoint + 74];
+        rightPixel.setColor(leftPixel.getColor());
+        leftBottomPixel = pixels[row + 80][col - 6];
+        leftBottomPixel.setColor(rightPixel.getColor());
+
+      }
+    }
+  }
+
+  public void mirrorGull()
+  {
+    int mirrorPoint = 345;
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    int count = 0;
+    Pixel[][] pixels = this.getPixels2D();
+
+    // loop through the rows
+    for (int row = 229; row < mirrorPoint; row++)
+    {
+      // loop from 13 to just before the mirror point
+      for (int col = 233; col < 350; col++)
+      {
+
+        leftPixel = pixels[row][col];
+        rightPixel = pixels[row]
+                [mirrorPoint - col + mirrorPoint];
+        rightPixel.setColor(leftPixel.getColor());
+        count++;
+      }
+      count++;
+    }
+    System.out.println(count);
+  }
   
   /* Main method for testing - each class in Java can have a main 
    * method 
